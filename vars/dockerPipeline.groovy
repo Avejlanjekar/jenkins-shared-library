@@ -1,10 +1,10 @@
-def call(String imagename){
+def call(String imagename, String credentialsId, String registryUrl){
     echo "Building docker image ${imagename}"
     def app= docker.build("${imagename}:${GIT_COMMIT}")
 
     docker.withRegistry(
-        'https://registry.hub.docker.com',
-        'dockerhub-credentials'
+        "${registryUrl}",
+        "${credentialsId}"
     )
     {
         app.push()
