@@ -3,9 +3,9 @@ def call(){
         agent any
 
         environment{
-            Docker_image: 'avejlanjekar45/jenkins-docker-pipeline-using-sl'
-            Registry_url: 'https://registry.hub.docker.com'
-            Credentials: 'dockerhub-credentials'
+            Docker_image= 'avejlanjekar45/jenkins-docker-pipeline-using-sl',
+            Registry_url= 'https://registry.hub.docker.com',
+            Credentials='dockerhub-credentials'
         }
 
         stages{
