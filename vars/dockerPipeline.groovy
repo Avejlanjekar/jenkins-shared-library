@@ -1,12 +1,38 @@
-def call(String imagename, String credentialsId, String registryUrl){
-    echo "Building docker image ${imagename}"
-    def app= docker.build("${imagename}:${GIT_COMMIT}")
+def call(){
+    pipeline{
+        agent any
 
-    docker.withRegistry(
-        "${registryUrl}",
-        "${credentialsId}"
-    )
-    {
-        app.push()
+        environment{
+            Docker_image: 'avejlanjekar45/jenkins-docker-pipeline-using-sl'
+            Registry_url: 'https://registry.hub.docker.com'
+            Credentials: 'dockerhub-credentials'
+        }
+
+        stages{
+            stage("checkout"){
+                steps{
+                    checkout scm
+                }
+            }
+
+            stage("docker build & Push"){
+                steps{
+                    script{
+                        def app=docker.build("${Docker_image}:${GIT_COMMIT}")
+
+                        docker.withRegistry(
+                            "${Registry_url}",
+                            "${Credentials}"
+                        )
+
+                        {
+                            app.push()
+                        }
+                    }
+                    
+                }
+
+            }
+        }
     }
 }
