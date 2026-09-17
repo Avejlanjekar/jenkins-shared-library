@@ -1,3 +1,3 @@
-def call(){
-    echo "Hello from jenkins shared library"
+def call(String imagename){
+    echo "Building docker image ${imagename}"
 }
